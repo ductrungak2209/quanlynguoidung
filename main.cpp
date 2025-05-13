@@ -1,9 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <unordered_map>
-#include <random>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 // Hàm băm 
