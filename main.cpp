@@ -1,188 +1,277 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unordered_map>
-#include <cstdlib>
-#include <ctime>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-const double DONGS_PER_POINT = 10.0;
+// Hàm băm
+string simpleHash(const string& password) {
+    hash<string> hasher;
+    return to_string(hasher(password));
+}
 
-class Wallet {
+class UserAccount {
 public:
-    int walletId;
-    int balance;
-    vector<string> transactionLog;
+    string user_id;
+    string username;
+    string email;
+    string password_hash;
+    bool created_by_admin;
 
-    Wallet() : walletId(-1), balance(0) {}
-    Wallet(int id, int initialBalance = 0) : walletId(id), balance(initialBalance) {}
+    UserAccount(string id, string uname, string mail, string password, bool admin = false) {
+        user_id = id;
+        username = uname;
+        email = mail;
+        password_hash = simpleHash(password);
+        created_by_admin = admin;
+    }
 };
 
-class User {
-public:
-    string username;
-    int walletId;
-    User() : username(""), walletId(-1) {}
-    User(string uname, int wId) : username(uname), walletId(wId) {}
-};
-
-unordered_map<string, User> users;
-unordered_map<int, Wallet> wallets;
-
-int nextWalletId = 3; // Start from 3 (0 = admin, 1 = duy, 2 = khang)
-
-string sinhOTP() {
-    string otp = "";
-    for (int i = 0; i < 6; i++) {
-        otp += to_string(rand() % 10);
-    }
-    return otp;
-}
-
-void chuyenDiem(string fromUser, string toUser, int amount) {
-    auto sender = users.find(fromUser);
-    auto receiver = users.find(toUser);
-
-    if (sender == users.end() || receiver == users.end()) {
-        cout << "Nguoi dung khong ton tai!\n";
-        return;
-    }
-
-    int fromWalletId = sender->second.walletId;
-    int toWalletId = receiver->second.walletId;
-
-    auto walletAIt = wallets.find(fromWalletId);
-    auto walletBIt = wallets.find(toWalletId);
-
-    if (walletAIt == wallets.end() || walletBIt == wallets.end()) {
-        cout << "Vi khong tim thay!\n";
-        return;
-    }
-
-    Wallet& walletA = walletAIt->second;
-    Wallet& walletB = walletBIt->second;
-
-    string otp = sinhOTP();
-    cout << "OTP giao dich: " << otp << "\nNhap OTP: ";
-    string enteredOtp;
-    cin >> enteredOtp;
-
-    if (enteredOtp != otp) {
-        cout << "OTP khong hop le! Giao dich bi huy.\n";
-        return;
-    }
-
-    if (walletA.balance >= amount) {
-        walletA.balance -= amount;
-        walletB.balance += amount;
-
-        string log = "Chuyen " + to_string(amount) + " diem tu " + fromUser + " den " + toUser + " luc " + to_string(time(0));
-        walletA.transactionLog.push_back(log);
-        walletB.transactionLog.push_back(log);
-
-        cout << "Giao dich thanh cong!\n";
-    } else {
-        cout << "So du khong du! Giao dich bi huy.\n";
+// Lưu tài khoản vào file
+void saveUserAccount(const UserAccount& user) {
+    ofstream file("users.txt", ios::app);
+    if (file.is_open()) {
+        file << user.user_id << "," << user.username << "," << user.email << "," << user.password_hash << "," << user.created_by_admin << endl;
+        file.close();
     }
 }
 
-void xemVi(const string& username) {
-    auto it = users.find(username);
-    if (it == users.end()) {
-        cout << "Nguoi dung khong tim thay!\n";
-        return;
-    }
+// Kiểm tra đăng nhập
+bool verifyLogin(const string& username, const string& password) {
+    ifstream file("users.txt");
+    string id, uname, email, stored_hash;
+    bool admin;
+    string hashedPassword = simpleHash(password);
 
-    int walletId = it->second.walletId;
-    auto walletIt = wallets.find(walletId);
-    if (walletIt == wallets.end()) {
-        cout << "Vi khong ton tai!\n";
-        return;
-    }
-
-    Wallet& wallet = walletIt->second;
-    cout << "ID Vi: " << wallet.walletId << "\n";
-    cout << "So du: " << wallet.balance << " diem (" << wallet.balance * DONGS_PER_POINT << " do)\n";
-    cout << "Lich su giao dich:\n";
-    for (const string& log : wallet.transactionLog) {
-        cout << " - " << log << "\n";
-    }
-}
-
-void dangKyNguoiDung() {
-    string newUsername;
-    cout << "Nhap ten nguoi dung moi: ";
-    cin >> newUsername;
-
-    if (users.find(newUsername) != users.end()) {
-        cout << "Ten nguoi dung da ton tai!\n";
-        return;
-    }
-
-    int newWalletId = nextWalletId++;
-    wallets[newWalletId] = Wallet(newWalletId, 0);
-    users[newUsername] = User(newUsername, newWalletId);
-
-    cout << "Dang ky thanh cong! Wallet ID: " << newWalletId << ", so du = 0 diem.\n";
-}
-
-void khoiTaoHeThong() {
-    srand(static_cast<unsigned int>(time(0)));
-
-    wallets[0] = Wallet(0, 10000);
-    users["admin"] = User("admin", 0);
-
-    wallets[1] = Wallet(1, 100);
-    users["duy"] = User("duy", 1);
-
-    wallets[2] = Wallet(2, 50);
-    users["khang"] = User("khang", 2);
-}
-
-int main() {
-    khoiTaoHeThong();
-
-    int luaChon;
-    string username;
-
-    while (true) {
-        cout << "\n----- Menu -----\n";
-        cout << "1. Xem thong tin vi\n";
-        cout << "2. Chuyen diem\n";
-        cout << "3. Dang ky nguoi dung moi\n";
-        cout << "4. Thoat\n";
-        cout << "Lua chon: ";
-        cin >> luaChon;
-
-        switch (luaChon) {
-            case 1:
-                cout << "Nhap ten dang nhap: ";
-                cin >> username;
-                xemVi(username);
-                break;
-            case 2: {
-                string fromUser, toUser;
-                int amount;
-                cout << "Nhap ten nguoi chuyen: ";
-                cin >> fromUser;
-                cout << "Nhap ten nguoi nhan: ";
-                cin >> toUser;
-                cout << "Nhap so diem: ";
-                cin >> amount;
-                chuyenDiem(fromUser, toUser, amount);
-                break;
-            }
-            case 3:
-                dangKyNguoiDung();
-                break;
-            case 4:
-                cout << "Tam biet!\n";
-                return 0;
-            default:
-                cout << "Lua chon khong hop le!\n";
+    while (getline(file, id, ',') &&
+           getline(file, uname, ',') &&
+           getline(file, email, ',') &&
+           getline(file, stored_hash, ',') &&
+           file >> admin) {
+        file.ignore();
+        if (uname == username && stored_hash == hashedPassword) {
+            return true;
         }
     }
+    return false;
+}
 
+// Tạo mật khẩu ngẫu nhiên
+string generateRandomPassword(int length = 12) {
+    const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> distr(0, chars.size() - 1);
+
+    string password;
+    for (int i = 0; i < length; i++) {
+        password += chars[distr(gen)];
+    }
+    return password;
+}
+
+// Sinh mã OTP
+string generateOTP() {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> distr(100000, 999999);
+    return to_string(distr(gen));
+}
+
+// Đổi mật khẩu
+void changePassword(const string& username, const string& newPassword) {
+    ifstream file("users.txt");
+    ofstream tempFile("temp.txt");
+    string id, uname, email, stored_hash;
+    bool admin;
+
+    while (getline(file, id, ',') &&
+           getline(file, uname, ',') &&
+           getline(file, email, ',') &&
+           getline(file, stored_hash, ',') &&
+           file >> admin) {
+        file.ignore();
+        if (uname == username) {
+            stored_hash = simpleHash(newPassword);
+        }
+        tempFile << id << "," << uname << "," << email << "," << stored_hash << "," << admin << endl;
+    }
+
+    file.close();
+    tempFile.close();
+    remove("users.txt");
+    rename("temp.txt", "users.txt");
+}
+
+// Sao lưu dữ liệu
+void backupData() {
+    ifstream source("users.txt", ios::binary);
+    ofstream backup("users_backup.txt", ios::binary);
+    backup << source.rdbuf();
+    source.close();
+    backup.close();
+}
+
+// Hiển thị tất cả người dùng
+void viewAllUsers() {
+    ifstream file("users.txt");
+    string id, uname, email, hash;
+    bool admin;
+    cout << "===== DANH SÁCH TÀI KHOẢN =====\n";
+    while (getline(file, id, ',') &&
+           getline(file, uname, ',') &&
+           getline(file, email, ',') &&
+           getline(file, hash, ',') &&
+           file >> admin) {
+        file.ignore();
+        cout << "ID: " << id << ", Username: " << uname
+             << ", Email: " << email
+             << ", Quản lý: " << (admin ? "Có" : "Không") << endl;
+    }
+    file.close();
+}
+
+// Cập nhật email người dùng với OTP xác nhận
+void updateUserInfo(const string& username) {
+    string otp;
+    string actualOtp = generateOTP();
+    cout << "Mã OTP của bạn: " << actualOtp << " (không chia sẻ mã này với người khác)\n";
+    cout << "Nhập mã OTP để xác nhận cập nhật: ";
+    cin >> otp;
+
+    if (otp != actualOtp) {
+        cout << "OTP không hợp lệ. Hủy thao tác.\n";
+        return;
+    }
+
+    string newEmail;
+    cout << "Nhập email mới: ";
+    cin >> newEmail;
+
+    ifstream file("users.txt");
+    if (!file) {
+        cerr << "Không thể mở file người dùng.\n";
+        return;
+    }
+
+    ofstream temp("temp.txt");
+    string id, uname, email, hash;
+    bool admin;
+
+    while (getline(file, id, ',') &&
+           getline(file, uname, ',') &&
+           getline(file, email, ',') &&
+           getline(file, hash, ',') &&
+           file >> admin) {
+        file.ignore();  // Bỏ ký tự xuống dòng
+        if (uname == username) {
+            email = newEmail;
+        }
+        temp << id << "," << uname << "," << email << "," << hash << "," << admin << endl;
+    }
+
+    file.close();
+    temp.close();
+    remove("users.txt");
+    rename("temp.txt", "users.txt");
+
+    cout << "Cập nhật thành công.\n";
+}
+
+
+// Tạo tài khoản quản trị
+void createAdminAccount() {
+    string id, username, email, password;
+    cout << "Nhập ID: "; cin >> id;
+    cout << "Nhập tên đăng nhập: "; cin >> username;
+    cout << "Nhập email: "; cin >> email;
+    cout << "Nhập mật khẩu (hoặc nhập 'auto'): "; cin >> password;
+
+    if (password == "auto") {
+        password = generateRandomPassword();
+        cout << "Mật khẩu tự tạo: " << password << endl;
+    }
+
+    UserAccount adminUser(id, username, email, password, true);
+    saveUserAccount(adminUser);
+    cout << "Tạo tài khoản quản lý thành công.\n";
+}
+
+// Hàm main chính
+int main() {
+    cout << "----- QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG -----\n";
+    while (true) {
+        cout << "\nChọn thao tác:\n";
+        cout << "1. Đăng ký\n2. Đăng nhập\n3. Đổi mật khẩu\n4. Tạo OTP\n5. Sao lưu dữ liệu\n6. Xem danh sách người dùng\n7. Cập nhật email\n8. Tạo tài khoản quản lý\n9. Thoát\n";
+        int choice;
+        cin >> choice;
+        cin.ignore();
+
+        if (choice == 1) {
+            string id, username, email, password;
+            cout << "Nhập ID: ";
+            cin >> id;
+            cout << "Nhập tên đăng nhập: ";
+            cin >> username;
+            cout << "Nhập email: ";
+            cin >> email;
+            cout << "Nhập mật khẩu (hoặc nhập 'auto' để tạo tự động): ";
+            cin >> password;
+
+            if (password == "auto") {
+                password = generateRandomPassword();
+                cout << "Mật khẩu tự tạo: " << password << endl;
+            }
+
+            UserAccount user(id, username, email, password);
+            saveUserAccount(user);
+            cout << "Tài khoản đã được tạo!\n";
+        }
+        else if (choice == 2) {
+            string username, password;
+            cout << "Nhập tên đăng nhập: ";
+            cin >> username;
+            cout << "Nhập mật khẩu: ";
+            cin >> password;
+            if (verifyLogin(username, password)) {
+                cout << "Đăng nhập thành công!\n";
+            } else {
+                cout << "Sai thông tin đăng nhập!\n";
+            }
+        }
+        else if (choice == 3) {
+            string username, newPassword;
+            cout << "Nhập tên đăng nhập: ";
+            cin >> username;
+            cout << "Nhập mật khẩu mới: ";
+            cin >> newPassword;
+            changePassword(username, newPassword);
+            cout << "Mật khẩu đã được thay đổi!\n";
+        }
+        else if (choice == 4) {
+            cout << "Mã OTP: " << generateOTP() << endl;
+        }
+        else if (choice == 5) {
+            backupData();
+            cout << "Dữ liệu đã được sao lưu!\n";
+        }
+        else if (choice == 6) {
+            viewAllUsers();
+        }
+        else if (choice == 7) {
+            string username;
+            cout << "Nhập tên đăng nhập cần cập nhật: ";
+            cin >> username;
+            updateUserInfo(username);
+        }
+        else if (choice == 8) {
+            createAdminAccount();
+        }
+        else if (choice == 9) {
+            cout << "Thoát chương trình.\n";
+            break;
+        }
+        else {
+            cout << "Lựa chọn không hợp lệ!\n";
+        }
+    }
     return 0;
 }
