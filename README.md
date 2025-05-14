@@ -6,7 +6,7 @@
 
 ## II. Giới thiệu thành viên và phân công công việc
 
-1. **Họ tên**: Vũ Hoàng Khang
+1. **Họ tên**: Lê Anh Đức
    - **Vai trò**: Nhóm trưởng, Lập trình viên
    - **Công việc thực hiện**:
      - Thiết kế cấu trúc cốt lõi của hệ thống, bao gồm định nghĩa các lớp Wallet và User.
@@ -14,7 +14,7 @@
      - Tham gia phát triển chức năng chuyển điểm, bao gồm kiểm tra người dùng và ví.
      - Quản lý nhóm, phân công công việc.
 
-2. **Họ tên**: Anh Đức, Tuấn Kha
+2. **Họ tên**: Hoàng Khang, Tuấn Kha
    - **Vai trò**: Lập trình viên
    - **Công việc thực hiện**:
      - Triển khai lưu trữ dữ liệu vào các tệp users.txt, wallets.txt và sao lưu vào backup_users.txt, backup_wallets.txt.
@@ -35,7 +35,7 @@
 ### Chương trình bao gồm các chức năng sau:
 
 1. **Đăng ký tài khoản**: 
-   - Nhập tên đăng nhập, họ tên, email, mật khẩu và xác thực OTP để tạo tài khoản mới. 
+   - Nhập tên đăng nhập, họ tên, email, mật khẩu 
    - Quản lý có thể đăng ký tài khoản với mật khẩu tự sinh.
 
 2. **Đăng nhập**: 
