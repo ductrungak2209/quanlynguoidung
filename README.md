@@ -2,20 +2,11 @@
 
 ## I. Giới thiệu dự án
 
-Chương trình ví điện tử là một ứng dụng được viết bằng ngôn ngữ lập
-trình C++ nhằm mô phỏng các chức năng của một ví điện tử. Người dùng có
-thể thực hiện các thao tác như đăng ký tài khoản, đăng nhập, nạp điểm,
-chuyển điểm, xác thực OTP, đổi mật khẩu, cập nhật thông tin cá nhân, và
-xem lịch sử giao dịch. Hệ thống hỗ trợ vai trò quản lý với các chức năng
-như đăng ký người dùng, cập nhật thông tin người dùng khác, và xem danh
-sách người dùng. Dữ liệu được lưu trữ cục bộ trong các tệp văn bản
-(users.txt, wallets.txt) với cơ chế sao lưu tự động vào các tệp
-backup_users.txt và backup_wallets.txt. Ứng dụng đảm bảo tính an toàn
-thông qua xác thực OTP và mã hóa mật khẩu cơ bản.
+Ứng dụng ví điện tử này được phát triển bằng ngôn ngữ lập trình C++ với mục tiêu mô phỏng các chức năng cơ bản của một ví điện tử. Người dùng có thể thực hiện nhiều thao tác như tạo tài khoản, đăng nhập, nạp và chuyển điểm, xác minh OTP, thay đổi mật khẩu, cập nhật thông tin cá nhân, cũng như tra cứu lịch sử giao dịch. Bên cạnh đó, hệ thống còn tích hợp vai trò quản trị viên, cho phép quản lý người dùng, chỉnh sửa thông tin và xem danh sách tài khoản đã đăng ký. Tất cả dữ liệu được lưu trữ cục bộ trong các tệp văn bản như users.txt và wallets.txt, đồng thời có cơ chế sao lưu tự động vào các tệp dự phòng backup_users.txt và backup_wallets.txt. Tính bảo mật của ứng dụng được đảm bảo nhờ việc sử dụng xác thực OTP và phương pháp mã hóa mật khẩu đơn giản.
 
 ## II. Giới thiệu thành viên và phân công công việc
 
-1. **Họ tên**: Dương Thái Thiện
+1. **Họ tên**: Vũ Hoàng Khang
    - **Vai trò**: Nhóm trưởng, Lập trình viên
    - **Công việc thực hiện**:
      - Thiết kế cấu trúc cốt lõi của hệ thống, bao gồm định nghĩa các lớp Wallet và User.
@@ -23,7 +14,7 @@ thông qua xác thực OTP và mã hóa mật khẩu cơ bản.
      - Tham gia phát triển chức năng chuyển điểm, bao gồm kiểm tra người dùng và ví.
      - Quản lý nhóm, phân công công việc.
 
-2. **Họ tên**: Thái Tuấn Vũ
+2. **Họ tên**: Anh Đức, Tuấn Kha
    - **Vai trò**: Lập trình viên
    - **Công việc thực hiện**:
      - Triển khai lưu trữ dữ liệu vào các tệp users.txt, wallets.txt và sao lưu vào backup_users.txt, backup_wallets.txt.
@@ -31,7 +22,7 @@ thông qua xác thực OTP và mã hóa mật khẩu cơ bản.
      - Hoàn thiện chức năng chuyển điểm, xem báo cáo ví, và xem danh sách người dùng dành cho quản lý.
      - Viết báo cáo dự án.
        
-3. **Họ tên**: Phan Nguyễn Tiến Vỹ
+3. **Họ tên**: Khánh Duy, Anh Tuấn
    - **Vai trò**: Lập trình viên
    - **Công việc thực hiện**:
      - Phát triển các hàm tiện ích bảo mật: mã hóa mật khẩu, sinh mật khẩu ngẫu nhiên, và sinh OTP.
