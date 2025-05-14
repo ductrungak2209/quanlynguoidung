@@ -1,8 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <unordered_map>
-#include <random>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -136,10 +132,12 @@ void viewAllUsers() {
 // Cập nhật email người dùng với OTP xác nhận
 void updateUserInfo(const string& username) {
     string otp;
+    string actualOtp = generateOTP();
+    cout << "Mã OTP của bạn: " << actualOtp << " (không chia sẻ mã này với người khác)\n";
     cout << "Nhập mã OTP để xác nhận cập nhật: ";
     cin >> otp;
 
-    if (otp != generateOTP()) {
+    if (otp != actualOtp) {
         cout << "OTP không hợp lệ. Hủy thao tác.\n";
         return;
     }
@@ -149,6 +147,11 @@ void updateUserInfo(const string& username) {
     cin >> newEmail;
 
     ifstream file("users.txt");
+    if (!file) {
+        cerr << "Không thể mở file người dùng.\n";
+        return;
+    }
+
     ofstream temp("temp.txt");
     string id, uname, email, hash;
     bool admin;
@@ -158,7 +161,7 @@ void updateUserInfo(const string& username) {
            getline(file, email, ',') &&
            getline(file, hash, ',') &&
            file >> admin) {
-        file.ignore();
+        file.ignore();  // Bỏ ký tự xuống dòng
         if (uname == username) {
             email = newEmail;
         }
@@ -172,6 +175,7 @@ void updateUserInfo(const string& username) {
 
     cout << "Cập nhật thành công.\n";
 }
+
 
 // Tạo tài khoản quản trị
 void createAdminAccount() {
