@@ -6,7 +6,7 @@
 
 ## II. Giới thiệu thành viên và phân công công việc
 
-1. **Họ tên**: Lê Tuấn Kha
+1. **Họ tên**: Lê Anh Đức
    - **Vai trò**: Nhóm trưởng, Lập trình viên
    - **Công việc thực hiện**:
      - Thiết kế cấu trúc cốt lõi của hệ thống, bao gồm định nghĩa các lớp Wallet và User.
