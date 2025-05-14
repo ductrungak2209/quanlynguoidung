@@ -1,8 +1,12 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <unordered_map>
+#include <random>
 
 using namespace std;
 
-// Hàm băm 
+// Hàm băm
 string simpleHash(const string& password) {
     hash<string> hasher;
     return to_string(hasher(password));
@@ -25,7 +29,7 @@ public:
     }
 };
 
-// Lưu tài khoản vào tập tin
+// Lưu tài khoản vào file
 void saveUserAccount(const UserAccount& user) {
     ofstream file("users.txt", ios::app);
     if (file.is_open()) {
@@ -40,8 +44,13 @@ bool verifyLogin(const string& username, const string& password) {
     string id, uname, email, stored_hash;
     bool admin;
     string hashedPassword = simpleHash(password);
-    
-    while (file >> id >> uname >> email >> stored_hash >> admin) {
+
+    while (getline(file, id, ',') &&
+           getline(file, uname, ',') &&
+           getline(file, email, ',') &&
+           getline(file, stored_hash, ',') &&
+           file >> admin) {
+        file.ignore();
         if (uname == username && stored_hash == hashedPassword) {
             return true;
         }
@@ -55,7 +64,7 @@ string generateRandomPassword(int length = 12) {
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<> distr(0, chars.size() - 1);
-    
+
     string password;
     for (int i = 0; i < length; i++) {
         password += chars[distr(gen)];
@@ -71,20 +80,25 @@ string generateOTP() {
     return to_string(distr(gen));
 }
 
-// Thay đổi mật khẩu
+// Đổi mật khẩu
 void changePassword(const string& username, const string& newPassword) {
     ifstream file("users.txt");
     ofstream tempFile("temp.txt");
     string id, uname, email, stored_hash;
     bool admin;
-    
-    while (file >> id >> uname >> email >> stored_hash >> admin) {
+
+    while (getline(file, id, ',') &&
+           getline(file, uname, ',') &&
+           getline(file, email, ',') &&
+           getline(file, stored_hash, ',') &&
+           file >> admin) {
+        file.ignore();
         if (uname == username) {
             stored_hash = simpleHash(newPassword);
         }
         tempFile << id << "," << uname << "," << email << "," << stored_hash << "," << admin << endl;
     }
-    
+
     file.close();
     tempFile.close();
     remove("users.txt");
@@ -100,14 +114,12 @@ void backupData() {
     backup.close();
 }
 
-
-// === PHẦN B: PHÂN QUYỀN, XEM DANH SÁCH, CẬP NHẬT THÔNG TIN ===
-
+// Hiển thị tất cả người dùng
 void viewAllUsers() {
     ifstream file("users.txt");
     string id, uname, email, hash;
     bool admin;
-    cout << " ===== DANH SÁCH TÀI KHOẢN ===== ";
+    cout << "===== DANH SÁCH TÀI KHOẢN =====\n";
     while (getline(file, id, ',') &&
            getline(file, uname, ',') &&
            getline(file, email, ',') &&
@@ -121,14 +133,14 @@ void viewAllUsers() {
     file.close();
 }
 
+// Cập nhật email người dùng với OTP xác nhận
 void updateUserInfo(const string& username) {
     string otp;
     cout << "Nhập mã OTP để xác nhận cập nhật: ";
     cin >> otp;
 
     if (otp != generateOTP()) {
-        cout << "OTP không hợp lệ. Hủy thao tác.
-";
+        cout << "OTP không hợp lệ. Hủy thao tác.\n";
         return;
     }
 
@@ -158,10 +170,10 @@ void updateUserInfo(const string& username) {
     remove("users.txt");
     rename("temp.txt", "users.txt");
 
-    cout << "Cập nhật thành công.
-";
+    cout << "Cập nhật thành công.\n";
 }
 
+// Tạo tài khoản quản trị
 void createAdminAccount() {
     string id, username, email, password;
     cout << "Nhập ID: "; cin >> id;
@@ -176,16 +188,15 @@ void createAdminAccount() {
 
     UserAccount adminUser(id, username, email, password, true);
     saveUserAccount(adminUser);
-    cout << "Tạo tài khoản quản lý thành công.
-";
+    cout << "Tạo tài khoản quản lý thành công.\n";
 }
 
-
+// Hàm main chính
 int main() {
     cout << "----- QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG -----\n";
     while (true) {
         cout << "\nChọn thao tác:\n";
-        cout << "1. Đăng ký\n2. Đăng nhập\n3. Đổi mật khẩu\n4. Tạo OTP\n5. Sao lưu dữ liệu\n6. Thoát\n";
+        cout << "1. Đăng ký\n2. Đăng nhập\n3. Đổi mật khẩu\n4. Tạo OTP\n5. Sao lưu dữ liệu\n6. Xem danh sách người dùng\n7. Cập nhật email\n8. Tạo tài khoản quản lý\n9. Thoát\n";
         int choice;
         cin >> choice;
         cin.ignore();
@@ -239,6 +250,18 @@ int main() {
             cout << "Dữ liệu đã được sao lưu!\n";
         }
         else if (choice == 6) {
+            viewAllUsers();
+        }
+        else if (choice == 7) {
+            string username;
+            cout << "Nhập tên đăng nhập cần cập nhật: ";
+            cin >> username;
+            updateUserInfo(username);
+        }
+        else if (choice == 8) {
+            createAdminAccount();
+        }
+        else if (choice == 9) {
             cout << "Thoát chương trình.\n";
             break;
         }
