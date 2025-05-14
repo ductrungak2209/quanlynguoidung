@@ -35,7 +35,7 @@
 ### Chương trình bao gồm các chức năng sau:
 
 1. **Đăng ký tài khoản**: 
-   - Nhập tên đăng nhập, họ tên, email, mật khẩu và xác thực OTP để tạo tài khoản mới. 
+   - Nhập tên đăng nhập, họ tên, email, mật khẩu 
    - Quản lý có thể đăng ký tài khoản với mật khẩu tự sinh.
 
 2. **Đăng nhập**: 
