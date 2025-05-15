@@ -416,18 +416,42 @@ void AdminDashboard(const string& adminUsername) {
         int choice;
         cin >> choice;
 
-        if (choice == 1) {
+        if (choice == 1) {//xem danh sách người dùng
             ifstream file("users.txt");
             string line;
-            cout << "\n--- Danh sách người dùng ---\n";
-            while (getline(file, line)) {
-                cout << line << endl;
+
+            if (!file.is_open()) {
+                cerr << "Khong the mo file!" << endl;
+                continue;
             }
+
+            cout << "Danh sach nguoi dung:\n";
+            cout << "ID\tUsername\tEmail\n";
+            cout << "-------------------------------\n";
+
+            while (getline(file, line)) {
+                stringstream ss(line);
+                string user_id, username, email;
+                string temp;
+
+                // Lấy các cột
+                getline(ss, user_id, ',');
+                getline(ss, username, ',');
+                getline(ss, email, ',');
+
+                // In ra
+                cout << user_id << "\t" << username << "\t\t" << email << "\n";
+            }
+
             file.close();
-        } else if (choice == 2) {
+        } else if (choice == 2) {//đổi mật khẩu
             string username, newPass;
             cout << "Nhập tên đăng nhập cần đổi mật khẩu: ";
             cin >> username;
+            if (existingUsernames.count(username) == 0) {
+            cout << "Tên đăng nhập chưa đã tồn tại. Vui lòng chọn tên khác.\n";
+                continue;
+            }
             cout << "Nhập mật khẩu mới: ";
             cin >> newPass;
             changePassword(username, newPass);
@@ -479,7 +503,6 @@ int main() {
         cout << "Chọn một tùy chọn: ";
         int choice;
         cin >> choice;
-
         if (choice == 1) {
             string id, uname, mail, pwd;
             char isAdminChar;
@@ -514,13 +537,10 @@ int main() {
                 clearRequirePasswordChangeFlag(uname);
                 cout << "Đổi mật khẩu thành công.\n";
             }
-                
                 if (isAdmin(uname)) {
                     AdminDashboard(uname);
                     continue;
-                }
-
-                while (true) {
+                }while (true) {
                     cout << "\n--- Menu người dùng ---\n";
                     cout << "1. Xem ví\n";
                     cout << "2. Nạp điểm\n";
