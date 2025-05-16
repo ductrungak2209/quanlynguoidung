@@ -4,10 +4,10 @@ using namespace std;
 int checkNumber(){
     int number;
     while (true) {
-        std::cin >> number;
+        cin >> number;
         if (cin.fail()) {
             cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Lỗi:Nhập lại số hợp lệ!" << endl;
         } else {
             break; 
@@ -124,7 +124,7 @@ void loadWalletsFromFile() {
     walletFile.close();
 }
 
-void saveWalletsToFile() {
+void saveWalletsToFile() { // Lưu dữ liệu ví vào file wallets.txt
     ofstream walletFile("wallets.txt");
     if (!walletFile.is_open()) {
         cerr << "Không thể mở file wallets.txt để ghi dữ liệu.\n";
@@ -141,7 +141,7 @@ void saveWalletsToFile() {
     walletFile.close();
 }
 
-void saveUserAccount(const UserAccount& user) {
+void saveUserAccount(const UserAccount& user) { // Lưu thông tin người dùng vào file users.txt
     ofstream file("users.txt", ios::app);
     if (file.is_open()) {
         file << user.user_id << "," << user.username << "," << user.email << "," << user.password_hash << ","
@@ -153,7 +153,7 @@ void saveUserAccount(const UserAccount& user) {
     }
 }
 
-void loadExistingUsernames() {
+void loadExistingUsernames() {// Tải danh sách tên người dùng đã tồn tại từ file users.txt
     ifstream file("users.txt");
     if (!file.is_open()) return;
 
@@ -172,7 +172,7 @@ void loadExistingUsernames() {
     file.close();
 }
 
-bool verifyLogin(const string& username, const string& password) {
+bool verifyLogin(const string& username, const string& password) {// Xác thực đăng nhập
     ifstream file("users.txt");
     if (!file.is_open()) return false;
 
@@ -187,11 +187,13 @@ bool verifyLogin(const string& username, const string& password) {
         getline(ss, stored_hash, ',');
         getline(ss, adminStr, ',');
         getline(ss, requireChangeStr);
-        if (uname == username && stored_hash == hashedPassword) return true;
+        if (uname == username && stored_hash == hashedPassword) 
+            return true;
     }
     return false;
 }
-bool changePassword(const string& username, const string& newPassword){
+bool changePassword(const string& username, const string& newPassword){   // Đổi mật khẩu
+    
     ifstream file("users.txt");
     if (!file.is_open()) return false;
     ofstream tempFile("temp.txt");
@@ -208,6 +210,8 @@ bool changePassword(const string& username, const string& newPassword){
         getline(ss, requireChangeStr);
         if (uname == username){
             tempFile << id << "," << uname << "," << email << "," << hashedPassword << "," << adminStr << "," << requireChangeStr << endl;
+        } else {
+            tempFile << line << endl;
         }
             
         
@@ -216,7 +220,7 @@ bool changePassword(const string& username, const string& newPassword){
     remove("users.txt");
     rename("temp.txt", "users.txt");
      return true;}
-bool isAdmin(const string& username) {
+bool isAdmin(const string& username) {      // Kiểm tra xem người dùng có phải admin không
     ifstream file("users.txt");
     if (!file.is_open()) return false;
 
@@ -235,7 +239,7 @@ bool isAdmin(const string& username) {
     return false;
 }
 
-bool checkRequirePasswordChange(const string& username) {
+bool checkRequirePasswordChange(const string& username) {// Kiểm tra xem người dùng có cần đổi mật khẩu không
     ifstream file("users.txt");
     if (!file.is_open()) return false;
 
@@ -254,13 +258,13 @@ bool checkRequirePasswordChange(const string& username) {
     return false;
 }
 
-void clearRequirePasswordChangeFlag(const string& username) {
+void clearRequirePasswordChangeFlag(const string& username) {// Xóa cờ yêu cầu đổi mật khẩu
     ifstream file("users.txt");
     if (!file.is_open()) return;
 
     ofstream tempFile("temp.txt");
     string line;
-    while (getline(file, line)) {
+    while (getline(file, line)) {// Đọc từng dòng và ghi vào file tạm
         stringstream ss(line);
         string id, uname, email, hash, adminStr, requireChangeStr;
         getline(ss, id, ',');
@@ -278,7 +282,7 @@ void clearRequirePasswordChangeFlag(const string& username) {
     rename("temp.txt", "users.txt");
 }
 
-void transferPoints(const string& fromUser, const string& toUser, int amount, bool isSendOtp = true ) {
+void transferPoints(const string& fromUser, const string& toUser, int amount, bool isSendOtp = true ) {// Chuyển điểm giữa các ví
     if (isSendOtp) {
         srand(time(0));
         int otpCode = rand() % 900000 + 100000;
@@ -319,7 +323,7 @@ void transferPoints(const string& fromUser, const string& toUser, int amount, bo
 }
 
 void depositPoints(const string& username, int amount, bool isSendOtp = true) {
-    if (isSendOtp){
+    if (isSendOtp){// Nếu cần gửi OTP thì xác thực OTP
         srand(time(0));
         int otpCode = rand() % 900000 + 100000;
         if (!verifyOTP(otpCode)) {
@@ -328,7 +332,7 @@ void depositPoints(const string& username, int amount, bool isSendOtp = true) {
         }
     }
 
-    if (usernameToWalletId.count(username) == 0) {
+    if (usernameToWalletId.count(username) == 0) {// Kiểm tra xem người dùng có ví không
         cout << "Người dùng không tồn tại hoặc chưa có ví.\n";
         return;
     }
@@ -342,7 +346,7 @@ void depositPoints(const string& username, int amount, bool isSendOtp = true) {
     cout << "Nạp điểm thành công!\n";
 }
 
-void viewWallet(const string& username) {
+void viewWallet(const string& username) {// Xem thông tin ví của người dùng
     if (usernameToWalletId.count(username) == 0) {
         cout << "Người dùng không có ví.\n";
         return;
@@ -357,10 +361,10 @@ void viewWallet(const string& username) {
     }
 }
 
-void createWalletForUser(const string& username) {
+void createWalletForUser(const string& username) {// Tạo ví cho người dùng mới
     wallets[nextWalletId] = Wallet(nextWalletId, 0);
     usernameToWalletId[username] = nextWalletId;
-
+    if (usernameToWalletId.count(username)) return; // Nếu đã có ví, không tạo lại
     ofstream walletFile("wallets.txt", ios::app);
     if (walletFile.is_open()) {
         walletFile << username << " " << nextWalletId << " 0\n";
@@ -372,7 +376,7 @@ void createWalletForUser(const string& username) {
     nextWalletId++;
 }
 
-void createAccountByAdmin() {
+void createAccountByAdmin() {// Tạo tài khoản cho người dùng bởi admin
     string id, uname, mail, pwd;
     bool isGen = false;
     cout << "Nhập ID người dùng: "; cin >> id;
@@ -384,7 +388,7 @@ void createAccountByAdmin() {
     cout << "Nhập email: "; cin >> mail;
     cout << "Nhập mật khẩu (hoặc gõ 'auto' để tạo tự động): "; cin >> pwd;
 
-    bool requirePasswordChange = false;
+    bool requirePasswordChange = false;// Cờ để yêu cầu đổi mật khẩu
     if (pwd == "auto") {
         pwd = generateRandomPassword();
         isGen = true;
@@ -411,10 +415,10 @@ void AdminDashboard(const string& adminUsername) {
         cout << "3. Tạo tài khoản hộ người dùng\n";
         cout << "4. Nạp điểm cho người dùng\n";
         cout << "5. Chuyển điểm cho người dùng\n";
-        cout << "6. Đăng xuất\n";
+        cout << "0. Đăng xuất\n";
         cout << "Chọn một tùy chọn: ";
-        int choice;
-        cin >> choice;
+        
+        int choice = checkNumber();
 
         if (choice == 1) {//xem danh sách người dùng
             ifstream file("users.txt");
@@ -452,13 +456,14 @@ void AdminDashboard(const string& adminUsername) {
             cout << "Tên đăng nhập chưa đã tồn tại. Vui lòng chọn tên khác.\n";
                 continue;
             }
+            
             cout << "Nhập mật khẩu mới: ";
             cin >> newPass;
             changePassword(username, newPass);
             cout << "Đã cập nhật mật khẩu thành công.\n";
-        } else if (choice == 3) {
+        } else if (choice == 3) {//tạo tài khoản
             createAccountByAdmin();
-        } else if (choice == 4) {
+        } else if (choice == 4) {//nạp điểm
             string targetuser;
             int amount;
             cout << "Nhập tên người dùng cần nạp điểm: ";
@@ -467,7 +472,7 @@ void AdminDashboard(const string& adminUsername) {
             amount = checkNumber();
             depositPoints(targetuser, amount, false);
             cout << "Đã nạp điểm thành công.\n";
-        } else if (choice == 5) {
+        } else if (choice == 5) {//   chuyển điểm
             string targetuser, touser;
             int amount;
             cout << "Nhập tên người dùng cần chuyển điểm: ";
@@ -478,7 +483,7 @@ void AdminDashboard(const string& adminUsername) {
             amount = checkNumber();
             transferPoints(targetuser, touser, amount, false);
             cout << "Đã chuyển điểm thành công.\n";
-        } else if (choice == 6) {
+        } else if (choice == 0) {
             cout << "Đăng xuất khỏi admin.\n" << endl;
             break;
         } else {
@@ -489,20 +494,21 @@ void AdminDashboard(const string& adminUsername) {
 
 int main() {
     
-    backupFile("users.txt");
-    backupFile("wallets.txt");
+    backupFile("users.txt");// Sao lưu file users.txt trước khi chạy chương trình
+    backupFile("wallets.txt");// Sao lưu file wallets.txt trước khi chạy chương trình
     
-    loadWalletsFromFile();
-    loadExistingUsernames();
+    loadWalletsFromFile();// Tải dữ liệu ví từ file wallets.txt
+    loadExistingUsernames();// Tải danh sách tên người dùng đã tồn tại từ file users.txt
 
     while (true) {
         cout << "\n==== HỆ THỐNG VÍ NGƯỜI DÙNG ====\n";
         cout << "1. Đăng ký tài khoản\n";
         cout << "2. Đăng nhập\n";
-        cout << "3. Thoát\n";
+        cout << "0. Thoát\n";
         cout << "Chọn một tùy chọn: ";
-        int choice;
-        cin >> choice;
+        
+        int choice = checkNumber();
+        
         if (choice == 1) {
             string id, uname, mail, pwd;
             char isAdminChar;
@@ -524,10 +530,8 @@ int main() {
             string uname, pwd;
             cout << "Tên đăng nhập: "; cin >> uname;
             cout << "Mật khẩu: "; cin >> pwd;
-
             if (verifyLogin(uname, pwd)) {
                 cout << "Đăng nhập thành công.\n";
-
             if (checkRequirePasswordChange(uname)) {
                 cout << "Bạn cần đổi mật khẩu trước khi tiếp tục.\n";
                 string newPass;
@@ -548,9 +552,9 @@ int main() {
                     cout << "4. Đổi mật khẩu\n";
                     cout << "0. Đăng xuất\n";
                     cout << "Chọn tùy chọn: ";
-                    int userChoice;
-                    cin >> userChoice;
-
+                    
+                    int userChoice = checkNumber() ;
+                    
                     if (userChoice == 1) {
                         viewWallet(uname);
                     } else if (userChoice == 2) {
@@ -588,7 +592,7 @@ int main() {
             } else {
                 cout << "Sai tên đăng nhập hoặc mật khẩu.\n";
             }
-        } else if (choice == 3) {
+        } else if (choice == 0) {
             cout << "Thoát chương trình.\n";
             break;
         } else {
