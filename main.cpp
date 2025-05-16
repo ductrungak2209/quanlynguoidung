@@ -322,7 +322,7 @@ void transferPoints(const string& fromUser, const string& toUser, int amount, bo
     cout << "Chuyển điểm thành công!\n";
 }
 
-void depositPoints(const string& username, int amount, bool isSendOtp = true) {
+void depositPoints(const string& username, int amount, bool isSendOtp = true) {// Nạp điểm vào ví
     if (isSendOtp){// Nếu cần gửi OTP thì xác thực OTP
         srand(time(0));
         int otpCode = rand() % 900000 + 100000;
