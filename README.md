@@ -36,7 +36,6 @@
 
 1. **Đăng ký tài khoản**: 
    - Nhập tên đăng nhập, họ tên, email, mật khẩu 
-   - Quản lý có thể đăng ký tài khoản với mật khẩu tự sinh.
 
 2. **Đăng nhập**: 
    - Kiểm tra tên đăng nhập và mật khẩu, cho phép truy cập hệ thống. 
@@ -52,11 +51,11 @@
    - Thay đổi mật khẩu sau khi xác thực OTP.
 
 6. **Cập nhật thông tin**: 
-   - Cập nhật họ tên và email, yêu cầu OTP. 
-   - Quản lý có thể cập nhật thông tin người dùng khác với OTP xác nhận từ người đó.
+   - Thay đổi mật khểu người dùng, yêu cầu OTP. 
+   - Quản lý có thể cập nhật thông tin người dùng khác.
 
 7. **Xem báo cáo ví**: 
-   - Hiển thị số dư, giá trị quy đổi (đô la) và lịch sử giao dịch của ví.
+   - Hiển thị số dư và lịch sử giao dịch của ví.
 
 8. **Xem danh sách người dùng**: 
    - Chỉ dành cho quản lý, hiển thị thông tin tất cả người dùng.
@@ -79,32 +78,29 @@
 - **Bước 1**: Tải mã nguồn từ kho lưu trữ này hoặc từ tệp Baitaplon.cpp đã được chia sẻ.
 - **Bước 2**: Mở Visual Studio Code (hoặc bất kỳ IDE nào hỗ trợ C++).
 - **Bước 3**: Biên dịch chương trình bằng trình biên dịch g++ (hoặc công cụ tương đương).  
-  Ví dụ dòng lệnh: `g++ Baitaplon.cpp -o baitaplon.exe`
+  Ví dụ dòng lệnh: `g++ main.cpp -o main.exe`
 - **Bước 4**: Đảm bảo các tệp dữ liệu (users.txt, wallets.txt, backup_users.txt, backup_wallets.txt) nằm trong cùng thư mục với tệp thực thi.
 
 ## V. Hướng dẫn sử dụng chương trình
 
 1. Mở Visual Studio Code (hoặc bất kỳ IDE nào hỗ trợ C++).
-2. Chạy chương trình: `./baitaplon` (Linux) hoặc `baitaplon.exe` (Windows).
+2. Chạy chương trình: `./main` (Linux) hoặc `main.exe` (Windows).
 3. Làm theo hướng dẫn hiển thị trên màn hình để:
-   - **Đăng ký tài khoản**: Nhập thông tin, xác thực OTP.
+   - **Đăng ký tài khoản**: Nhập thông tin.
    - **Đăng nhập tài khoản**: Yêu cầu đổi mật khẩu nếu tài khoản tự sinh.
-   - **Nạp điểm**: Nhập số tiền đô la, xác thực OTP.
+   - **Nạp điểm**: Nhập số điểm, xác thực OTP.
    - **Chuyển điểm**: Nhập người nhận, số điểm, xác thực OTP.
    - **Đổi mật khẩu**: Xác thực OTP.
-   - **Cập nhật thông tin cá nhân**: Xác thực OTP.
    - **Xem báo cáo ví**: Xem số dư, lịch sử giao dịch.
-   - **Quản lý** (nếu là quản lý): Đăng ký người dùng, cập nhật thông tin người dùng khác, xem danh sách người dùng.
+   - **Quản lý** (nếu là quản lý): Đăng ký hộ người dùng, cập nhật thông tin người dùng khác, xem danh sách người dùng.
    - **Thoát chương trình**: Dữ liệu sẽ tự động lưu vào users.txt, wallets.txt và sao lưu vào backup_users.txt, backup_wallets.txt.
 
 ## VI. Mô tả chi tiết cách chương trình hoạt động
 
-Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt và wallets.txt. Nếu không có dữ liệu, hệ thống tạo tài khoản quản trị mặc
-định (admin, mật khẩu: admin@123, ví ID: 0, số dư: 10,000 điểm). Menu chính hiển thị các tùy chọn sau:
+Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt và wallets.txt. Menu chính hiển thị các tùy chọn sau:
 
 1. **Đăng ký tài khoản**:
    - Người dùng nhập tên đăng nhập, họ tên, email, và mật khẩu.
-   - Hệ thống tạo mã OTP 6 chữ số ngẫu nhiên và yêu cầu người dùng nhập để xác thực.
    - Quản lý có thể đăng ký tài khoản với mật khẩu tự sinh, được đánh dấu là tài khoản tự sinh.
    - Thông tin được lưu vào users.txt, ví mới được tạo và lưu vào wallets.txt.
 
@@ -127,11 +123,6 @@ Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt
    - **Đổi mật khẩu**:
      - Yêu cầu xác thực OTP, nhập mật khẩu mới.
      - Mật khẩu được mã hóa và cập nhật trong users.txt.
-
-   - **Cập nhật thông tin**:
-     - Cập nhật họ tên và email, yêu cầu xác thực OTP.
-     - Quản lý có thể cập nhật thông tin người dùng khác, yêu cầu OTP từ người đó.
-     - Dữ liệu được lưu vào users.txt.
 
    - **Xem báo cáo ví**:
      - Hiển thị ID ví, số dư (điểm và đô la tương đương), và lịch sử giao dịch.
@@ -193,3 +184,4 @@ Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt
 - Diễn đàn thảo luận [StackOverflow](https://stackoverflow.com/).
 - Trang tài liệu học lập trình: [GeeksforGeeks](https://www.geeksforgeeks.org/cpp-programming-language/).
 - Tài liệu về quản lý tệp và bảo mật trong C++: [cplusplus.com](https://www.cplusplus.com/).
+- Chat GPT.
