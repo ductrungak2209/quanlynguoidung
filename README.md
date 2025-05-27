@@ -14,7 +14,7 @@
      - Tham gia phát triển chức năng chuyển điểm, bao gồm kiểm tra người dùng và ví.
      - Quản lý nhóm, phân công công việc.
 
-2. **Họ tên**: Hoàng Khang, Tuấn Kha
+2. **Họ tên**: Vũ Hoàng Khang, Tuấn Kha
    - **Vai trò**: Lập trình viên
    - **Công việc thực hiện**:
      - Triển khai lưu trữ dữ liệu vào các tệp users.txt, wallets.txt và sao lưu vào backup_users.txt, backup_wallets.txt.
@@ -22,7 +22,7 @@
      - Hoàn thiện chức năng chuyển điểm, xem báo cáo ví, và xem danh sách người dùng dành cho quản lý.
      - Viết báo cáo dự án.
        
-3. **Họ tên**: Khánh Duy, Anh Tuấn
+3. **Họ tên**: Pham Khánh Duy, Nguyễn Anh Tuấn
    - **Vai trò**: Lập trình viên
    - **Công việc thực hiện**:
      - Phát triển các hàm tiện ích bảo mật: mã hóa mật khẩu, sinh mật khẩu ngẫu nhiên, và sinh OTP.
