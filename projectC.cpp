@@ -1,3 +1,4 @@
+//Khai báo thư viện
 #include <iostream>
 #include <string>
 #include <vector>
@@ -5,10 +6,14 @@
 #include <cstdlib>
 #include <ctime>
 
+//Sử dụng std để không phải viết std::cout, std::string mỗi lần.
+
 using namespace std;
 
+//Hằng số quy đổi 1 điểm = 10 đồng. Dùng để hiển thị số dư ví ra tiền đồng.
 const double DONGS_PER_POINT = 10.0;
 
+//Lớp Wallet – Đại diện cho ví người dùng
 class Wallet {
 public:
     int walletId;
@@ -19,6 +24,7 @@ public:
     Wallet(int id, int initialBalance = 0) : walletId(id), balance(initialBalance) {}
 };
 
+//Lớp User – Đại diện cho người dùng
 class User {
 public:
     string username;
@@ -27,11 +33,13 @@ public:
     User(string uname, int wId) : username(uname), walletId(wId) {}
 };
 
+//Cấu trúc dữ liệu chính
 unordered_map<string, User> users;
 unordered_map<int, Wallet> wallets;
 
 int nextWalletId = 3; // Start from 3 (0 = admin, 1 = duy, 2 = khang)
 
+//Hàm tạo OTP ngẫu nhiên
 string sinhOTP() {
     string otp = "";
     for (int i = 0; i < 6; i++) {
@@ -40,6 +48,7 @@ string sinhOTP() {
     return otp;
 }
 
+//Hàm chuyển điểm
 void chuyenDiem(string fromUser, string toUser, int amount) {
     auto sender = users.find(fromUser);
     auto receiver = users.find(toUser);
@@ -87,6 +96,7 @@ void chuyenDiem(string fromUser, string toUser, int amount) {
     }
 }
 
+//Hàm xem thông tin ví
 void xemVi(const string& username) {
     auto it = users.find(username);
     if (it == users.end()) {
@@ -110,6 +120,7 @@ void xemVi(const string& username) {
     }
 }
 
+//Hàm đăng ký người dùng mới
 void dangKyNguoiDung() {
     string newUsername;
     cout << "Nhap ten nguoi dung moi: ";
@@ -127,6 +138,7 @@ void dangKyNguoiDung() {
     cout << "Dang ky thanh cong! Wallet ID: " << newWalletId << ", so du = 0 diem.\n";
 }
 
+//Khởi tạo hệ thống với 3 người dùng mẫu admin, duy, khang
 void khoiTaoHeThong() {
     srand(static_cast<unsigned int>(time(0)));
 
@@ -140,6 +152,7 @@ void khoiTaoHeThong() {
     users["khang"] = User("khang", 2);
 }
 
+// Hàm main – Vòng lặp giao diện người dùng
 int main() {
     khoiTaoHeThong();
 
