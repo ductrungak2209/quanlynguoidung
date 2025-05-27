@@ -103,7 +103,7 @@ void xemVi(const string& username) {
 
     Wallet& wallet = walletIt->second;
     cout << "ID Vi: " << wallet.walletId << "\n";
-    cout << "So du: " << wallet.balance << " diem (" << wallet.balance * DONGS_PER_POINT << " do)\n";
+    cout << "So du: " << wallet.balance << " diem (" << wallet.balance * DONGS_PER_POINT << " dong)\n";
     cout << "Lich su giao dich:\n";
     for (const string& log : wallet.transactionLog) {
         cout << " - " << log << "\n";
