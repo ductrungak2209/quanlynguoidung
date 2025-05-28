@@ -134,49 +134,6 @@ Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt
      - Lưu toàn bộ dữ liệu vào users.txt, wallets.txt.
      - Tạo bản sao lưu vào backup_users.txt, backup_wallets.txt bằng lệnh hệ thống (copy trên Windows, cp trên Unix).
 
-## VII. Sơ đồ mô tả cách chương trình hoạt động
-
-```
-                    +-------------------+
-                    | Khởi động hệ thống|
-                    +-------------------+
-                              |
-                              v
-                    +-------------------+
-                    |  Tải dữ liệu từ   |
-                    |  users.txt và     |
-                    |  wallets.txt      |
-                    +-------------------+
-                              |
-                              v
-                    +-------------------+
-                    |     Menu chính    |
-                    +-------------------+
-                              |
-            +----------------+----------------+
-            |                |                |
-            v                v                v
-    +-------------+  +-------------+  +-------------+
-    | Đăng ký tài |  |  Đăng nhập  |  |   Thoát     |
-    |   khoản     |  |             |  |             |
-    +-------------+  +-------------+  +-------------+
-                              |
-                              v
-                    +-------------------+
-                    |   Menu người dùng |
-                    +-------------------+
-                              |
-      +----------+----------+---------+----------+----------+
-      |          |          |         |          |          |      
-      v          v          v         v          v          v      
-  +-------+  +-------+  +-------+  +-------+  +-------+  +-------+
-  | Nạp   |  |Chuyển |  | Đổi   |  | Cập   |  | Xem   |  | Xem   |
-  | điểm  |  | điểm  |  | mật   |  | nhật  |  | báo   |  | danh  |
-  |       |  |       |  | khẩu  |  | thông |  | cáo   |  | sách  |
-  |       |  |       |  |       |  | tin   |  | ví    |  | người |
-  +-------+  +-------+  +-------+  +-------+  +-------+  | dùng  |
-                                                         +-------+
-```
 
 ## VIII. Tài liệu tham khảo
 
