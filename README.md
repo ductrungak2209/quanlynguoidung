@@ -2,7 +2,9 @@
 
 ## I. Giới thiệu dự án
 
-Ứng dụng ví điện tử này được phát triển bằng ngôn ngữ lập trình C++ với mục tiêu mô phỏng các chức năng cơ bản của một ví điện tử. Người dùng có thể thực hiện nhiều thao tác như tạo tài khoản, đăng nhập, nạp và chuyển điểm, xác minh OTP, thay đổi mật khẩu, cập nhật thông tin cá nhân, cũng như tra cứu lịch sử giao dịch. Bên cạnh đó, hệ thống còn tích hợp vai trò quản trị viên, cho phép quản lý chỉnh sửa thông tin người dùng. Tất cả dữ liệu được lưu trữ cục bộ trong các tệp văn bản như users.txt và wallets.txt, đồng thời có cơ chế sao lưu tự động vào các tệp dự phòng backup_users.txt và backup_wallets.txt. 
+-Ứng dụng ví điện tử này được phát triển bằng ngôn ngữ lập trình C++ với mục tiêu mô phỏng các chức năng cơ bản của một ví điện tử. Người dùng có thể thực hiện nhiều thao tác như tạo tài khoản, đăng nhập, nạp và chuyển điểm, xác minh OTP, thay đổi mật khẩu, cập nhật thông tin cá nhân, cũng như tra cứu lịch sử giao dịch.
+-Tất cả dữ liệu được lưu trữ cục bộ trong các tệp văn bản như users.txt và wallets.txt, đồng thời có cơ chế sao lưu tự động vào các tệp dự phòng backup_users.txt và backup_wallets.txt. 
+-Ví có các chức năng và phân quyền cho người dừng và admin với các chức năng và giao diện khác nhau.
 
 ## II. Giới thiệu thành viên và phân công công việc
 
@@ -124,7 +126,7 @@ Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt
      - Yêu cầu xác thực OTP, nhập mật khẩu mới.
      - Mật khẩu được mã hóa và cập nhật trong users.txt.
 
-   - **Xem báo cáo ví**:
+   - **Xem ví**:
      - Hiển thị ID ví, số dư (điểm và đô la tương đương), và lịch sử giao dịch.
 
    - **Xem danh sách người dùng** (chỉ quản lý):
@@ -135,7 +137,7 @@ Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt
      - Tạo bản sao lưu vào backup_users.txt, backup_wallets.txt bằng lệnh hệ thống (copy trên Windows, cp trên Unix).
 
 
-## VIII. Tài liệu tham khảo
+## VII. Tài liệu tham khảo
 
 - Tài liệu C++ từ trang [cppreference.com](https://en.cppreference.com/w/).
 - Diễn đàn thảo luận [StackOverflow](https://stackoverflow.com/).
