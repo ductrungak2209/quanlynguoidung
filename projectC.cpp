@@ -174,6 +174,13 @@ int main() {
         cout << "Lua chon: ";
         cin >> luaChon;
 
+if (cin.fail()) {
+    cin.clear(); // Xóa trạng thái lỗi
+    cin.ignore(10000, '\n'); // Bỏ dữ liệu rác còn lại
+    cout << "Giao dich khong hop le! Vui long chon 1 so tu 1 den 4.\n";
+    continue; // Quay lại menu
+}
+
         switch (luaChon) {
             case 1:
                 cout << "Nhap ten dang nhap: ";
