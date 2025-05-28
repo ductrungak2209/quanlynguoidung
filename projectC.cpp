@@ -37,7 +37,7 @@ public:
 unordered_map<string, User> users;
 unordered_map<int, Wallet> wallets;
 
-int nextWalletId = 3; // Start from 3 (0 = admin, 1 = duy, 2 = khang)
+int nextWalletId = 3; // Start from 3 (0 = admin, 1 = thay, 2 = co)
 
 //Hàm tạo OTP ngẫu nhiên
 string sinhOTP() {
@@ -146,10 +146,10 @@ void khoiTaoHeThong() {
     users["admin"] = User("admin", 0);
 
     wallets[1] = Wallet(1, 100);
-    users["duy"] = User("duy", 1);
+    users["thay"] = User("thay", 1);
 
     wallets[2] = Wallet(2, 50);
-    users["khang"] = User("khang", 2);
+    users["co"] = User("co", 2);
 }
 
 // Hàm main – Vòng lặp giao diện người dùng
