@@ -104,7 +104,7 @@ unordered_map<int, Wallet> wallets;
 int nextWalletId = 1000;
 unordered_set<string> existingUsernames;
 
-void loadWalletsFromFile() {
+void loadWalletsFromFile() {// Tải dữ liệu ví từ file wallets.txt
     ifstream walletFile("wallets.txt");
     if (!walletFile.is_open()) {
         cerr << "Không thể mở file wallets.txt để đọc dữ liệu.\n";
@@ -187,8 +187,11 @@ bool verifyLogin(const string& username, const string& password) {// Xác thực
         getline(ss, stored_hash, ',');
         getline(ss, adminStr, ',');
         getline(ss, requireChangeStr);
-        if (uname == username && stored_hash == hashedPassword) 
+        if (uname == username && stored_hash == hashedPassword) {
+            file.close();
             return true;
+        }
+            
     }
     return false;
 }
@@ -362,9 +365,9 @@ void viewWallet(const string& username) {// Xem thông tin ví của người d�
 }
 
 void createWalletForUser(const string& username) {// Tạo ví cho người dùng mới
+    if (usernameToWalletId.count(username)) return;
     wallets[nextWalletId] = Wallet(nextWalletId, 0);
     usernameToWalletId[username] = nextWalletId;
-    if (usernameToWalletId.count(username)) return; // Nếu đã có ví, không tạo lại
     ofstream walletFile("wallets.txt", ios::app);
     if (walletFile.is_open()) {
         walletFile << username << " " << nextWalletId << " 0\n";
@@ -405,6 +408,7 @@ void createAccountByAdmin() {// Tạo tài khoản cho người dùng bởi admi
     }
 
     cout << "Tạo tài khoản người dùng thành công.\n";
+    existingUsernames.insert(uname);
 }
 
 void AdminDashboard(const string& adminUsername) {
@@ -557,12 +561,14 @@ int main() {
                     
                     if (userChoice == 1) {
                         viewWallet(uname);
-                    } else if (userChoice == 2) {
+                        
+                        
+                    } else if (userChoice == 2) {// Nạp điểm
                         int amount;
                         cout << "Nhập số điểm muốn nạp: "; 
                         amount = checkNumber();
-                        depositPoints(uname, amount);
-                    } else if (userChoice == 3) {
+                        depositPoints(uname, amount);                        
+                    } else if (userChoice == 3) {// Chuyển điểm
                         string toUser;
                         int amount;
                         cout << "Tên người nhận: ";
