@@ -2,7 +2,7 @@
 
 ## I. Giới thiệu dự án
 
-Ứng dụng ví điện tử này được phát triển bằng ngôn ngữ lập trình C++ với mục tiêu mô phỏng các chức năng cơ bản của một ví điện tử. Người dùng có thể thực hiện nhiều thao tác như tạo tài khoản, đăng nhập, nạp và chuyển điểm, xác minh OTP, thay đổi mật khẩu, cập nhật thông tin cá nhân, cũng như tra cứu lịch sử giao dịch. Bên cạnh đó, hệ thống còn tích hợp vai trò quản trị viên, cho phép quản lý người dùng, chỉnh sửa thông tin và xem danh sách tài khoản đã đăng ký. Tất cả dữ liệu được lưu trữ cục bộ trong các tệp văn bản như users.txt và wallets.txt, đồng thời có cơ chế sao lưu tự động vào các tệp dự phòng backup_users.txt và backup_wallets.txt. Tính bảo mật của ứng dụng được đảm bảo nhờ việc sử dụng xác thực OTP và phương pháp mã hóa mật khẩu đơn giản.
+Ứng dụng ví điện tử này được phát triển bằng ngôn ngữ lập trình C++ với mục tiêu mô phỏng các chức năng cơ bản của một ví điện tử. Người dùng có thể thực hiện nhiều thao tác như tạo tài khoản, đăng nhập, nạp và chuyển điểm, xác minh OTP, thay đổi mật khẩu, cập nhật thông tin cá nhân, cũng như tra cứu lịch sử giao dịch. Bên cạnh đó, hệ thống còn tích hợp vai trò quản trị viên, cho phép quản lý chỉnh sửa thông tin người dùng. Tất cả dữ liệu được lưu trữ cục bộ trong các tệp văn bản như users.txt và wallets.txt, đồng thời có cơ chế sao lưu tự động vào các tệp dự phòng backup_users.txt và backup_wallets.txt. 
 
 ## II. Giới thiệu thành viên và phân công công việc
 
