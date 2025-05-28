@@ -50,6 +50,11 @@ string sinhOTP() {
 
 //Hàm chuyển điểm
 void chuyenDiem(string fromUser, string toUser, int amount) {
+    if (amount <= 0) {
+        cout << "Giao dich khong hop le! So diem phai lon hon 0.\n";
+        return;
+    }
+
     auto sender = users.find(fromUser);
     auto receiver = users.find(toUser);
 
@@ -86,7 +91,8 @@ void chuyenDiem(string fromUser, string toUser, int amount) {
         walletA.balance -= amount;
         walletB.balance += amount;
 
-        string log = "Chuyen " + to_string(amount) + " diem tu " + fromUser + " den " + toUser + " luc " + to_string(time(0));
+        time_t now = time(0);
+        string log = "Chuyen " + to_string(amount) + " diem tu " + fromUser + " den " + toUser + " luc " + string(ctime(&now));
         walletA.transactionLog.push_back(log);
         walletB.transactionLog.push_back(log);
 
