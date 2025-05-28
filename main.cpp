@@ -1,17 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
-// ==== HÀM XÁC ĐỊNH SỐ ====
-int checkNumber(){
+// ==== HÀM XÁC ĐỊNH SỐ NGUYÊN DƯƠNG ====
+int checkNumber() {
     int number;
     while (true) {
         cin >> number;
+
+        // Kiểm tra đầu vào có phải số không
         if (cin.fail()) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Lỗi:Nhập lại số hợp lệ!" << endl;
-        } else {
-            break; 
+            cout << "Lỗi: Vui lòng nhập một số hợp lệ!" << endl;
+            continue;
         }
+
+        // Kiểm tra số nguyên dương
+        if (number <= 0) {
+            cout << "Lỗi: Vui lòng nhập số điểm hợp lệ!" << endl;
+            continue;
+        }
+
+        break;
     }
     return number;
 }
