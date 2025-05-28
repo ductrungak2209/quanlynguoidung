@@ -1,4 +1,4 @@
-# CHƯƠNG TRÌNH VÍ ĐIỆN TỬ
+# CHƯƠNG TRÌNH QUẢN LÍ VÍ ĐIỆN TỬ
 
 ## I. Giới thiệu dự án
 
