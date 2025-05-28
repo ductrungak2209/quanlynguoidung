@@ -141,4 +141,3 @@ Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt
 - Diễn đàn thảo luận [StackOverflow](https://stackoverflow.com/).
 - Trang tài liệu học lập trình: [GeeksforGeeks](https://www.geeksforgeeks.org/cpp-programming-language/).
 - Tài liệu về quản lý tệp và bảo mật trong C++: [cplusplus.com](https://www.cplusplus.com/).
-- Chat GPT.
