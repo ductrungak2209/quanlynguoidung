@@ -145,10 +145,10 @@ void khoiTaoHeThong() {
     wallets[0] = Wallet(0, 10000);
     users["admin"] = User("admin", 0);
 
-    wallets[1] = Wallet(1, 100);
+    wallets[1] = Wallet(1, 1000);
     users["thay"] = User("thay", 1);
 
-    wallets[2] = Wallet(2, 50);
+    wallets[2] = Wallet(2, 1000);
     users["co"] = User("co", 2);
 }
 
