@@ -181,17 +181,26 @@ int main() {
                 xemVi(username);
                 break;
             case 2: {
-                string fromUser, toUser;
-                int amount;
-                cout << "Nhap ten nguoi chuyen: ";
-                cin >> fromUser;
-                cout << "Nhap ten nguoi nhan: ";
-                cin >> toUser;
-                cout << "Nhap so diem: ";
-                cin >> amount;
-                chuyenDiem(fromUser, toUser, amount);
-                break;
-            }
+    string fromUser, toUser;
+    int amount;
+    cout << "Nhap ten nguoi chuyen: ";
+    cin >> fromUser;
+    cout << "Nhap ten nguoi nhan: ";
+    cin >> toUser;
+    cout << "Nhap so diem: ";
+    cin >> amount;
+
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "Giao dich khong hop le! So diem phai la mot so nguyen.\n";
+        break;
+    }
+
+    chuyenDiem(fromUser, toUser, amount);
+    break;
+}
+
             case 3:
                 dangKyNguoiDung();
                 break;
