@@ -50,11 +50,11 @@
 5. **Đổi mật khẩu**: 
    - Thay đổi mật khẩu sau khi xác thực OTP.
 
-6. **Cập nhật thông tin**: 
+6. **Đổi mật khẩu**: 
    - Thay đổi mật khểu người dùng, yêu cầu OTP. 
    - Quản lý có thể cập nhật thông tin người dùng khác.
 
-7. **Xem báo cáo ví**: 
+7. **Xem ví**: 
    - Hiển thị số dư và lịch sử giao dịch của ví.
 
 8. **Xem danh sách người dùng**: 
@@ -75,7 +75,7 @@
 
 ## IV. Hướng dẫn tải và biên dịch chương trình
 
-- **Bước 1**: Tải mã nguồn từ kho lưu trữ này hoặc từ tệp Baitaplon.cpp đã được chia sẻ.
+- **Bước 1**: Tải mã nguồn từ kho lưu trữ này hoặc từ tệp main.cpp đã được chia sẻ.
 - **Bước 2**: Mở Visual Studio Code (hoặc bất kỳ IDE nào hỗ trợ C++).
 - **Bước 3**: Biên dịch chương trình bằng trình biên dịch g++ (hoặc công cụ tương đương).  
   Ví dụ dòng lệnh: `g++ main.cpp -o main.exe`
